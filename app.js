@@ -11,10 +11,9 @@ var conf    = pmx.initModule();
 
 
 pm2.launchBus(function(err, bus) {
-  bus.on('*', function(event, data){
-    if (event == 'process:event' && data.event == 'online') {
-      logger.log('Process %s restarted %s', data.process.name, data.process.restart_time, function() { console.log(arguments)});
-      console.log('Process %s restarted %s', data.process.name, data.process.restart_time);
-    }
+  bus.on('log:out', function(data){
+  	  logger.log(data.process.name + ": " + data.data.str);
+//      logger.log('Process %s restarted %s', data.process.name, data.process.restart_time, function() { console.log(arguments)});
+//      console.log('Process %s restarted %s', data.process.name, data.process.restart_time);
   });
 });
